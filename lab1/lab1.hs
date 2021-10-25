@@ -54,7 +54,7 @@ min3Int (x, y, z) | (x <= y) && (x <= z) = x
                   | (y <= x) && (y <= z) = y
                   | (z <= x) && (z <= y) = z
 
-{- -}
+{- Pattern matching -}
 
 not' :: Bool -> Bool
 not' True = False
@@ -64,7 +64,70 @@ isItTheAnswer :: String -> Bool
 isItTheAnswer "Love" = True
 isItTheAnswer _ = False
 
-printHello = putStrLn "Hello"
+or' :: (Bool, Bool) -> Bool
+or' (True, True) = True
+or' (True, False) = True
+or' (False, True) = True
+or' (False, False) = False
 
+nand' :: (Bool, Bool) -> Bool
+nand' (True, True) = False
+nand' (True, False) = True
+nand' (False, True) = True
+nand' (False, False) = True
+
+{- Case of -}
+
+not'2 :: Bool -> Bool
+not'2 x = case x of
+            True -> False
+            False -> True
+
+absInt3 :: Int -> Int
+absInt3 x = case (x >= 0) of
+              True -> x
+              _ -> -x
+
+isItTheAnswer2 :: String -> Bool
+isItTheAnswer2 x = case x of
+                    "Love" -> True
+                    _ -> False
+
+xor' :: (Bool, Bool) -> Bool
+xor' (x, y) = case (x, y) of
+                (True, True) -> False
+                (True, False) -> True
+                (False, True) -> True
+                (False, False) -> False
+
+{- Where clause -}
+roots :: (Double, Double, Double) -> (Double, Double)
+roots (a, b, c) = ((-b - d) / e, (-b + d) / e)
+  where d = sqrt (b * b - 4 * a * c)
+        e = 2 * a
+
+unitVec2D :: (Double, Double) -> (Double, Double)
+unitVec2D (x, y) = (x / l, y / l)
+  where l = sqrt (x * x + y * y)
+
+{- Let in -}
+roots2 :: (Double, Double, Double) -> (Double, Double)
+roots2 (a, b, c) =
+  let d = sqrt (b * b - 4 * a * c)
+      e = 2 * a
+  in ( (-b - d) / e, (-b + d) / e)
+
+unitVec2D' :: (Double, Double) -> (Double, Double)
+unitVec2D' (x, y) =
+  let l = sqrt (x * x + y * y)
+  in ((x / l), (y / l))
+
+roots3 :: (Double, Double, Double) -> (Double, Double)
+roots3 (a, b, c) = ((-b - d) / e, (-b + d) / e)
+  where {d = sqrt (b * b - 4 * a * c);
+   e = 2 * a
+        }
+
+printHello = putStrLn "Hello"
 main = printHello
 
